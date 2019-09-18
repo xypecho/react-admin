@@ -45,11 +45,40 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
+                            // name为随机生成的变量，ext为文件后缀
+                            name:'resource/[name].[ext]'
+                        },
+                    },
+                ],
+            },
+            // 字体图标的处理
+            {
+                test: /\.(ttf|otf|eot|svg|woff|woff2)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name:'resource/[name].[ext]'
                         },
                     },
                 ],
             },
         ],
+    },
+    // webpack 4.x 删除了教程里面webpack3.x的 webpack.optimize.commonChunksPlugin api
+    // 抽离公共模块
+    optimization: {
+        runtimeChunk: false,
+        splitChunks: {
+            cacheGroups: {
+                common: {
+                    name: "common",
+                    chunks: "all",
+                    minChunks: 2
+                }
+            }
+        }
     },
     plugins: [
         // 生成html文件
@@ -57,6 +86,6 @@ module.exports = {
             template: './src/index.html'
         }),
         // 抽离出来的css文件的名字
-        new ExtractTextPlugin("styles.css"),
+        new ExtractTextPlugin("css/[name].css"),
     ]
 };
