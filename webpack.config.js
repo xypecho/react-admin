@@ -46,7 +46,7 @@ module.exports = {
                         options: {
                             limit: 8192,
                             // name为随机生成的变量，ext为文件后缀
-                            name:'resource/[name].[ext]'
+                            name: 'resource/[name].[ext]'
                         },
                     },
                 ],
@@ -59,7 +59,7 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
-                            name:'resource/[name].[ext]'
+                            name: 'resource/[name].[ext]'
                         },
                     },
                 ],
@@ -87,5 +87,8 @@ module.exports = {
         }),
         // 抽离出来的css文件的名字
         new ExtractTextPlugin("css/[name].css"),
-    ]
+    ],
+    devServer: {
+        contentBase: './dist'
+    },
 };
