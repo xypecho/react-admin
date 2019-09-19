@@ -6,6 +6,7 @@ module.exports = {
     entry: './src/app.jsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
+        publicPath:'/dist/',
         filename: 'js/app.js'
     },
     module: {
@@ -89,6 +90,8 @@ module.exports = {
         new ExtractTextPlugin("css/[name].css"),
     ],
     devServer: {
-        contentBase: './dist'
+        // contentBase: './dist'
+        // 设置项目的端口号
+        // port: 8081  
     },
 };
