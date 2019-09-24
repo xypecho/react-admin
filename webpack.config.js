@@ -5,9 +5,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // 生成一个 HTML5 
 module.exports = {
     entry: './src/app.jsx',
     output: {
+        // path.resolve 是指在当前文件夹的根目录下查找文件，此处是在查找dist文件夹
         path: path.resolve(__dirname, 'dist'),
-        publicPath:'/dist/',
+        publicPath: '/dist/',
         filename: 'js/app.js'
+    },
+    resolve: {
+        // 设置别名，避免写‘import Home from './page/home/index.jsx'’ 类似代码
+        // 可以直接写 ‘import Home from 'page/home/index.jsx'’
+        alias: {
+            page: path.resolve(__dirname, 'src/page'),
+            component: path.resolve(__dirname, 'src/component')
+        }
     },
     module: {
         rules: [
@@ -92,6 +101,9 @@ module.exports = {
     devServer: {
         // contentBase: './dist'
         // 设置项目的端口号
-        // port: 8081  
+        port: 8081,
+        historyApiFallback: {
+            index: '/dist/index.html'
+        },
     },
 };
