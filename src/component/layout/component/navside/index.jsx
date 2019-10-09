@@ -6,6 +6,7 @@
  * @description: 侧边导航栏
  */
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 export default class Navside extends React.Component {
     constructor(props) {
@@ -26,16 +27,32 @@ export default class Navside extends React.Component {
                 <div className="sidebar-collapse">
                     <ul className="nav" id="main-menu">
                         <li>
-                            <a href="empty.html"><i className="fa fa-fw fa-file"></i> 首页</a>
+                            <NavLink activeClassName='active-menu' exact to="/"><i className="fa fa-fw fa-file"></i> 首页</NavLink>
                         </li>
                         <li>
-                            <a href="#" onClick={() => { this.toggleShow() }}><i className="fa fa-sitemap"></i> 商品<span className="fa arrow"></span></a>
+                            <Link to="/product" onClick={() => { this.toggleShow() }}><i className="fa fa-sitemap"></i> 商品<span className="fa arrow"></span></Link>
                             <ul className={`nav nav-second-level ${this.state.isCollapse === true ? "collapse" : ""}`}>
                                 <li>
-                                    <a href="#">商品管理</a>
+                                    <NavLink activeClassName='active-menu' to="/product">商品管理</NavLink>
                                 </li>
                                 <li>
-                                    <a href="#">品类管理</a>
+                                    <NavLink activeClassName='active-menu' to="/product-category">品类管理</NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <Link to="/order" onClick={() => { this.toggleShow() }}><i className="fa fa-sitemap"></i> 订单<span className="fa arrow"></span></Link>
+                            <ul className={`nav nav-second-level ${this.state.isCollapse === true ? "collapse" : ""}`}>
+                                <li>
+                                    <NavLink activeClassName='active-menu' to="/order">订单管理</NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <Link to="/user" onClick={() => { this.toggleShow() }}><i className="fa fa-sitemap"></i> 用户<span className="fa arrow"></span></Link>
+                            <ul className={`nav nav-second-level ${this.state.isCollapse === true ? "collapse" : ""}`}>
+                                <li>
+                                    <NavLink activeClassName='active-menu' to="/user">用户管理</NavLink>
                                 </li>
                             </ul>
                         </li>
