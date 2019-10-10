@@ -93,7 +93,8 @@ module.exports = {
     plugins: [
         // 生成html文件
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            template: './src/index.html',
+            favicon: './favicon.ico'
         }),
         // 抽离出来的css文件的名字
         new ExtractTextPlugin("css/[name].css"),
