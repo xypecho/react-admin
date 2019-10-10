@@ -2,11 +2,14 @@
  * @Author: xueyp
  * @Date: 2019-10-10 21:20:53
  * @Last Modified by: xueyp
- * @Last Modified time: 2019-10-10 22:05:23
+ * @Last Modified time: 2019-10-10 23:07:13
  * @description: 登录页面
  */
 import React from 'react';
+import User from 'service/user-service.jsx';
 import './index.scss';
+
+const _user = new User();
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -23,13 +26,20 @@ export default class Login extends React.Component {
             [inputName]: inputValue
         })
     }
+    onSubmit() {
+        _user.login({ username: this.state.username, password: this.state.password }).then(res => {
+            console.log(res)
+        }, err => {
+            console.error(err)
+        })
+    }
     render() {
         return (
             <div className="col-md-4 col-md-offset-4">
                 <div className="panel panel-default login-panel">
                     <div className="panel-heading">欢迎登录react-admin</div>
                     <div className="panel-body">
-                        <form className="form-horizontal">
+                        <div className="form-horizontal">
                             <div className="form-group">
                                 <label className="col-sm-3 control-label">用户名</label>
                                 <div className="col-sm-9">
@@ -44,10 +54,10 @@ export default class Login extends React.Component {
                             </div>
                             <div className="form-group">
                                 <div className="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" className="btn btn-primary btn-block">登录</button>
+                                    <button onClick={e => this.onSubmit(e)} className="btn btn-primary btn-block">登录</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
