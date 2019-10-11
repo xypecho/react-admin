@@ -7,17 +7,23 @@
  */
 import React from 'react';
 import User from 'service/user-service.jsx';
+import Mutil from 'util/mm.jsx';
 import './index.scss';
 
 const _user = new User();
+const _mm = new Mutil();
 
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirect: _mm.getUrlParam('redirect') || '/'
         }
+    }
+    componentWillMount() {
+        document.title = '登录';
     }
     inputChange(e) {
         let inputName = e.target.name,
@@ -26,11 +32,18 @@ export default class Login extends React.Component {
             [inputName]: inputValue
         })
     }
+    keyUpChange(e) {
+        if (e.keyCode === 13) {
+            this.onSubmit()
+        }
+    }
     onSubmit() {
         _user.login({ username: this.state.username, password: this.state.password }).then(res => {
-            console.log(res)
+            // console.log(res)
+            console.log(this.state.redirect)
+            // this.props.history.push(this.state.redirect)
         }, err => {
-            console.error(err)
+            _mm.errorTips(err);
         })
     }
     render() {
@@ -49,7 +62,7 @@ export default class Login extends React.Component {
                             <div className="form-group">
                                 <label className="col-sm-3 control-label">密码</label>
                                 <div className="col-sm-9">
-                                    <input type="password" name='password' className="form-control" placeholder="请输入密码" onChange={e => this.inputChange(e)} />
+                                    <input type="password" name='password' className="form-control" placeholder="请输入密码" onChange={e => this.inputChange(e)} onKeyUp={e => this.keyUpChange(e)} />
                                 </div>
                             </div>
                             <div className="form-group">

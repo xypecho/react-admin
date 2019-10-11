@@ -6,6 +6,7 @@
  * @description: 通用的一些工具
  */
 export default class Mutil {
+    // 封装的ajax请求
     request(params) {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -15,6 +16,7 @@ export default class Mutil {
                 data: params.data || '',
                 success(res) {
                     if (res.status === 0) {
+                        // && 这个写法相当于 if (resolve === 'function') { resolve(res.data, res.msg) }
                         typeof resolve === 'function' && resolve(res.data, res.msg);
                     } else if (res.status === 10) {
                         // 未登录
@@ -29,8 +31,19 @@ export default class Mutil {
             })
         })
     }
+
+    // 重定向到首页
     focusLogin() {
-        // 这样登录成功后重新跳转到未登录时访问的页面
         window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+    }
+
+    // 获取url中的参数
+    getUrlParam(name) {
+        return new URLSearchParams(location.search).get(name);
+    }
+
+    // 错误提示
+    errorTips(msg) {
+        alert(msg || '网络错误，请稍候重试')
     }
 }
