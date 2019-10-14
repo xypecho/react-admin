@@ -2,7 +2,7 @@
  * @Author: xueyp
  * @Date: 2019-09-23 21:39:05
  * @Last Modified by: xueyp
- * @Last Modified time: 2019-10-10 21:33:32
+ * @Last Modified time: 2019-10-14 21:43:38
  */
 import React from 'react';
 import ReactDom from 'react-dom';
@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-ro
 import Home from 'page/home/index.jsx';
 import Layout from 'component/layout/index.jsx';
 import Login from 'page/login/index.jsx';
+import ErrorPage from 'page/error/index.jsx';
 
 class App extends React.Component {
     render() {
@@ -23,6 +24,7 @@ class App extends React.Component {
                                 <Route exact path="/" component={Home} />
                                 <Route path="/product" component={Home} />
                                 <Route path="/product-category" component={Home} />
+                                <Route component={ErrorPage} />
                             </Switch>
                         </Layout>
                     )} />
