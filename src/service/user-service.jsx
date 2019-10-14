@@ -16,4 +16,10 @@ export default class User {
             data: userInfo
         })
     }
+    logout(){
+        return _mm.request({
+            url: '/user/logout.do',
+            type: 'post',
+        })
+    }
 }

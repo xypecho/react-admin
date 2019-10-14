@@ -39,9 +39,8 @@ export default class Login extends React.Component {
     }
     onSubmit() {
         _user.login({ username: this.state.username, password: this.state.password }).then(res => {
-            // console.log(res)
-            console.log(this.state.redirect)
-            // this.props.history.push(this.state.redirect)
+            localStorage.setItem('userInfo',JSON.stringify(res));
+            this.props.history.push(this.state.redirect)
         }, err => {
             _mm.errorTips(err);
         })
