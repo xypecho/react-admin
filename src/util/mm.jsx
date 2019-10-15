@@ -2,7 +2,7 @@
  * @Author: xueyp
  * @Date: 2019-10-10 21:10:25
  * @Last Modified by: xueyp
- * @Last Modified time: 2019-10-10 22:59:57
+ * @Last Modified time: 2019-10-15 21:44:07
  * @description: 通用的一些工具
  */
 export default class Mutil {
@@ -14,7 +14,7 @@ export default class Mutil {
                 url: params.url || '',
                 dataType: params.dataType || 'json',
                 data: params.data || '',
-                success(res) {
+                success: res => {
                     if (res.status === 0) {
                         // && 这个写法相当于 if (resolve === 'function') { resolve(res.data, res.msg) }
                         typeof resolve === 'function' && resolve(res.data, res.msg);
@@ -25,7 +25,7 @@ export default class Mutil {
                         typeof reject === 'function' && reject(res.msg || res.data);
                     }
                 },
-                error(err) {
+                error: err => {
                     typeof reject === 'function' && reject(err.statusText);
                 }
             })

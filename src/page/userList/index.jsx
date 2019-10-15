@@ -2,17 +2,34 @@
  * @Author: xueyp
  * @Date: 2019-10-15 20:24:53
  * @Last Modified by: xueyp
- * @Last Modified time: 2019-10-15 21:30:09
+ * @Last Modified time: 2019-10-15 21:39:14
  * @description: 用户管理页面
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageTitle from 'component/layout/component/pageTitle/index.jsx'
 import Pagination from 'component/pagination/index.jsx';
+import User from 'service/user-service.jsx';
+import Mutil from 'util/mm.jsx';
+const _user = new User();
+const _mm = new Mutil();
 
 export default class UserList extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            pageNum: 1
+        }
+    }
+    componentWillMount() {
+        this.loadUserList();
+    }
+    loadUserList() {
+        _user.getUserList(this.state.pageNum).then(res => {
+            console.log(res)
+        }, err => {
+            _mm.errorTips(err);
+        })
     }
     render() {
         return (
@@ -25,7 +42,7 @@ export default class UserList extends React.Component {
                                 <div className="table-responsive">
                                     <div id="dataTables-example_wrapper" className="dataTables_wrapper form-inline" role="grid"><table className="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
                                         <thead>
-                                            <tr role="row"><th className="sorting_asc"  aria-controls="dataTables-example" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" >Rendering engine</th><th className="sorting"  aria-controls="dataTables-example" aria-label="Browser: activate to sort column ascending" >Browser</th><th className="sorting"  aria-controls="dataTables-example" aria-label="Platform(s): activate to sort column ascending" >Platform(s)</th><th className="sorting"  aria-controls="dataTables-example" aria-label="Engine version: activate to sort column ascending">Engine version</th><th className="sorting"  aria-controls="dataTables-example" aria-label="CSS grade: activate to sort column ascending" >CSS grade</th></tr>
+                                            <tr role="row"><th className="sorting_asc" aria-controls="dataTables-example" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" >Rendering engine</th><th className="sorting" aria-controls="dataTables-example" aria-label="Browser: activate to sort column ascending" >Browser</th><th className="sorting" aria-controls="dataTables-example" aria-label="Platform(s): activate to sort column ascending" >Platform(s)</th><th className="sorting" aria-controls="dataTables-example" aria-label="Engine version: activate to sort column ascending">Engine version</th><th className="sorting" aria-controls="dataTables-example" aria-label="CSS grade: activate to sort column ascending" >CSS grade</th></tr>
                                         </thead>
                                         <tbody>
                                             <tr className="gradeA odd">
