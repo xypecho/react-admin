@@ -18,7 +18,8 @@ export default class UserList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            pageNum: 1
+            pageNum: 1,
+            list: []
         }
     }
     componentWillMount() {
@@ -27,8 +28,16 @@ export default class UserList extends React.Component {
     loadUserList() {
         _user.getUserList(this.state.pageNum).then(res => {
             console.log(res)
+            this.setState(res)
         }, err => {
             _mm.errorTips(err);
+        })
+    }
+    onPageChange(pageNum) {
+        this.setState({
+            pageNum
+        }, () => {
+            this.loadUserList()
         })
     }
     render() {
@@ -40,74 +49,34 @@ export default class UserList extends React.Component {
                         <div className="panel panel-default">
                             <div className="panel-body">
                                 <div className="table-responsive">
-                                    <div id="dataTables-example_wrapper" className="dataTables_wrapper form-inline" role="grid"><table className="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
-                                        <thead>
-                                            <tr role="row"><th className="sorting_asc" aria-controls="dataTables-example" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" >Rendering engine</th><th className="sorting" aria-controls="dataTables-example" aria-label="Browser: activate to sort column ascending" >Browser</th><th className="sorting" aria-controls="dataTables-example" aria-label="Platform(s): activate to sort column ascending" >Platform(s)</th><th className="sorting" aria-controls="dataTables-example" aria-label="Engine version: activate to sort column ascending">Engine version</th><th className="sorting" aria-controls="dataTables-example" aria-label="CSS grade: activate to sort column ascending" >CSS grade</th></tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr className="gradeA odd">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Firefox 1.0</td>
-                                                <td className=" ">Win 98+ / OSX.2+</td>
-                                                <td className="center ">1.7</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA even">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Firefox 1.5</td>
-                                                <td className=" ">Win 98+ / OSX.2+</td>
-                                                <td className="center ">1.8</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA odd">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Firefox 2.0</td>
-                                                <td className=" ">Win 98+ / OSX.2+</td>
-                                                <td className="center ">1.8</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA even">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Firefox 3.0</td>
-                                                <td className=" ">Win 2k+ / OSX.3+</td>
-                                                <td className="center ">1.9</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA odd">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Camino 1.0</td>
-                                                <td className=" ">OSX.2+</td>
-                                                <td className="center ">1.8</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA even">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Camino 1.5</td>
-                                                <td className=" ">OSX.3+</td>
-                                                <td className="center ">1.8</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA odd">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Netscape 7.2</td>
-                                                <td className=" ">Win 95+ / Mac OS 8.6-9.2</td>
-                                                <td className="center ">1.7</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA even">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Netscape Browser 8</td>
-                                                <td className=" ">Win 98SE+</td>
-                                                <td className="center ">1.7</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA odd">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Netscape Navigator 9</td>
-                                                <td className=" ">Win 98+ / OSX.2+</td>
-                                                <td className="center ">1.8</td>
-                                                <td className="center ">A</td>
-                                            </tr><tr className="gradeA even">
-                                                <td className="sorting_1">Gecko</td>
-                                                <td className=" ">Mozilla 1.0</td>
-                                                <td className=" ">Win 95+ / OSX.1+</td>
-                                                <td className="center ">1</td>
-                                                <td className="center ">A</td>
-                                            </tr></tbody>
-                                    </table>
-                                        <Pagination current={1} total={22} onChange={(current, pageSize) => { console.log(current, pageSize) }} />
+                                    <div id="dataTables-example_wrapper" className="dataTables_wrapper form-inline">
+                                        <table className="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" >
+                                            <thead>
+                                                <tr>
+                                                    <th className="sorting_asc">ID</th>
+                                                    <th className="sorting_asc">用户名</th>
+                                                    <th className="sorting_asc">邮箱</th>
+                                                    <th className="sorting_asc">电话</th>
+                                                    <th className="sorting_asc">注册时间</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    this.state.list.map((item, index) => {
+                                                        return (
+                                                            <tr className="gradeA odd" key={index}>
+                                                                <td className="sorting_1">{item.id}</td>
+                                                                <td className="sorting_1">{item.username}</td>
+                                                                <td className="sorting_1">{item.email}</td>
+                                                                <td className="sorting_1">{item.phone}</td>
+                                                                <td className="sorting_1">{new Date(item.createTime).toLocaleString()}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <Pagination current={this.state.pageNum} total={this.state.total} onChange={(current, pageSize) => { this.onPageChange(current, pageSize) }} />
                                     </div>
                                 </div>
                             </div>
